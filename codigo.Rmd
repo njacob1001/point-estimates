@@ -231,7 +231,6 @@ for (n in sample_sizes) {
        xlab = "Media muestral", col = "lightblue", border = "white", ylab="Densidad")
   
   # Superponer la curva de la distribución normal teórica
-  # se usa la desviacion estandar teórica y la media teórica 
   curve(dnorm(x, mean = 5, sd = 5/sqrt(n)), 
         add = TRUE, col = "red", lwd = 2)
   
