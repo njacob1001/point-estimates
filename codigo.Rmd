@@ -3,8 +3,8 @@ title: "Tarea 2 - Estadística Inferencial"
 author: "Nilson Jacob González Campo, Lorena Portilla, Yan Carlos Cuarán"
 date: "`r format(Sys.Date(), '%d de %B de %Y')`"
 output:
-  html_document: default
-  pdf_document: default
+  html_document:
+    code_folding: hide
 lang: es
 ---
 
@@ -22,7 +22,7 @@ $$ f(x) = \frac{x}{\theta^2} e^{-x/\theta}, \quad \theta > 0, \quad x > 0 $$
 
 **a.**
 
-### paso 1
+### Paso 1
 
 En primer lugar, se trata de buscar si la función de densidad corresponde a algún modelo de distribución conocido. En este caso, la función dada es similar a la función de densidad de la distribución Gamma:
 
@@ -33,10 +33,10 @@ $$
 Para que esta función sea similar a la función dada en este punto, se debe especificar un valor para $k=2$, lo que hace que la función se exprese de la siguiente forma:
 
 $$
-f(x) = \frac{x^{2-1} e^{-x/\theta}}{\theta^2 \Gamma(2)} = \frac{x e^{-x/\theta}}{\theta^2 \cdot 1} = \frac{x e^{-x/\theta}}{\theta^2} = \frac{x}{\theta^2} e^{-x/\theta}
+f(x) = \frac{x^{2-1} e^{-x/\theta}}{\theta^2 \Gamma(2)} = \frac{x e^{-x/\theta}}{\theta^2 \Gamma(2)} = \frac{x e^{-x/\theta}}{\theta^2 \cdot 1} = \frac{x e^{-x/\theta}}{\theta^2} = \frac{x}{\theta^2} e^{-x/\theta}
 $$
 
-Según las propiedades de esta función de densidad de la distribución Gamma, se sabe que: $\Gamma(2) = (2-1)! = 1! = 1$
+Según las propiedades de esta función de densidad de la distribución Gamma, se sabe que: $\Gamma(2) = (2-1)! = 1! = 1$.
 
 La función de verosimilitud, expresada como $L(\theta \mid x_1, x_2, \dots, x_n)$, se define como el producto de las funciones de densidad evaluadas en cada observación:
 
@@ -47,24 +47,24 @@ $$
 Esta expresión se puede reordenar como:
 
 $$
-L(\theta; x_1, x_2, \dots, x_n) = \frac{1}{\theta^{2n}} \left( \prod_{i=1}^{n} x_i \right) e^{-\frac{1}{\theta} \sum_{i=1}^{n} x_i}
+L(\theta; x_1, x_2, \dots, x_n) = \frac{1}{\theta^{2n}} \left( \prod_{i=1}^{n} x_i \right) e^{-\frac{1}{\theta} \sum_{i=1}^{n} x_i}.
 $$
 
-### Paso 2: calcular la log-verosimilitud
+### Paso 2: Calcular la log-verosimilitud
 
-se saca el logaritmo natural a $L(\theta; x_1, x_2, \dots, x_n)$ utilizando las siguientes propiedades del logaritmo natural:
+Se toma el logaritmo natural de $L(\theta; x_1, x_2, \dots, x_n)$ utilizando las siguientes propiedades del logaritmo natural:
 
 -   **Potencia:** $\ln\left(\theta^{-2n}\right) = -2n \ln(\theta)$.
 -   **Producto:** $\ln\left(\prod_{i=1}^{n} x_i\right) = \sum_{i=1}^{n} \ln(x_i)$.
 -   **Exponencial:** $\ln\left(\exp\left(-\frac{1}{\theta} \sum_{i=1}^{n} x_i\right)\right) = -\frac{1}{\theta} \sum_{i=1}^{n} x_i$.
 
-entonces se obtiene la expresion simplificada de la funcion de log-verosimilitud:
+Entonces se obtiene la expresión simplificada de la función de log-verosimilitud:
 
 $$
 \ell(\theta) = -2n \ln(\theta) + \sum_{i=1}^{n} \ln(x_i) - \frac{1}{\theta} \sum_{i=1}^{n} x_i.
 $$
 
-### Paso 3: se maxima la funcion de log verosimilitud respecto al parametro $\theta$.
+### Paso 3: Maximizar la función de log-verosimilitud respecto al parámetro $\theta$
 
 Para encontrar el estimador de máxima verosimilitud (EMV) de $\theta$, debemos maximizar la función de log-verosimilitud $\ell(\theta)$. Esto se hace derivando $\ell(\theta)$ con respecto a $\theta$ y luego igualando a cero.
 
@@ -136,13 +136,13 @@ $$
 \hat{\theta} = \frac{\bar{x}}{2}.
 $$
 
-Esto quiere decir que para la distribucion gamma cuando $k=2$ entonces el estimador de maxima verosimilitud es $\bar{x}/2$.
+Esto quiere decir que para la distribución Gamma, cuando $k=2$, el estimador de máxima verosimilitud es $\bar{x}/2$.
 
 **b.**
 
-Para enconrar el estimador usando el metodo de momentos para $\theta$ primero se igualan los momentos muestrales (media muestral) a los momentos poblacionales (la esperanza poblacional) para luego despejar $\theta$.
+Para encontrar el estimador usando el método de momentos para $\theta$, primero se igualan los momentos muestrales (media muestral) a los momentos poblacionales (la esperanza poblacional) para luego despejar $\theta$.
 
-#### Paso 1: Calcular la esperanza poblacional $X$
+#### Paso 1: Calcular la esperanza poblacional de $X$
 
 Teniendo en cuenta que la variable $X$ sigue una distribución Gamma con parámetros $k=2$ y $\theta$, se sabe que la media se calcula usando:
 
@@ -150,7 +150,7 @@ $$
 E[X] = k\theta.
 $$
 
-Para este caso donde $k = 2$, entonces quedaria:
+Para este caso, donde $k = 2$, quedaría:
 
 $$
 E[X] = 2\theta.
@@ -170,16 +170,16 @@ $$
 2\theta = \bar{X}.
 $$
 
-#### Paso 3: Se despeja $\theta$:
+#### Paso 3: Despejar $\theta$
 
 $$
-\hat{\theta}_{MM} = \frac{\bar{X}}{2}
+\hat{\theta}_{MM} = \frac{\bar{X}}{2}.
 $$
 
-Finalmente el estimador usando el metodo de momentos de $\theta$ es:
+Finalmente, el estimador usando el método de momentos de $\theta$ es:
 
 $$
-\hat{\theta} = \frac{\bar{X}}{2}
+\hat{\theta} = \frac{\bar{X}}{2}.
 $$
 
 # Punto 2
@@ -206,6 +206,7 @@ Esto nos permitirá visualizar el efecto del Teorema del Límite Central, que es
 
 ## Código de Simulación y Gráficos
 
+
 ```{r simulacion, echo=TRUE, fig.width=8, fig.height=6}
 set.seed(321)
 
@@ -214,7 +215,7 @@ lambda <- 1/5   # Tasa de la exponencial
 B <- 10000       # Número de muestras a generar
 sample_sizes <- c(5, 20, 50, 100, 500, 1000)
 
-# configurar como se posicionan las graficas, de a dos columnas
+# Configurar cómo se posicionan las gráficas, de a dos columnas
 par(mfrow = c(2,2))
 
 # Ciclo para cada tamaño de muestra
@@ -235,10 +236,8 @@ for (n in sample_sizes) {
   # Agregar leyenda
   legend("topright", legend = "Normal Teórica", col = "red", lwd = 2, bty = "n")
 
-  
   # Gráfico QQ-plot para evaluar la normalidad de las medias
   qqnorm(sample_means, main = paste("QQ plot (n =", n, ")"), col = "blue")
   qqline(sample_means, col = "red", lwd = 2)
 }
 ```
-
