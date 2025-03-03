@@ -182,6 +182,10 @@ $$
 \hat{\theta} = \frac{\bar{X}}{2}.
 $$
 
+Para obtener el estimador de \(\theta\), se utilizaron los métodos de Máxima Verosimilitud y de Momentos. En este caso, ambos producen el mismo estimador, \(\hat{\theta} = \frac{\bar{x}}{2}\), lo que sugiere que la media muestral proporciona una buena aproximación del parámetro desconocido.
+
+
+
 # Punto 2
 
 **(Vale 2.0)** Una población es definida por una variable aleatoria $X$ con distribución exponencial,
@@ -242,3 +246,9 @@ for (n in sample_sizes) {
   qqline(sample_means, col = "red", lwd = 2)
 }
 ```
+
+
+Cuando el tamaño de la muestra n es pequeño $(n=5, n=20)$, la distribución de las medias sigue teniendo un sesgo hacia la derecha, debido a la asimetría de la distribución exponencial original.
+A medida que el tamaño de la muestra aumenta $(n=50, n=100, n=500, n=1000)$, la distribución de las medias muestrales se aproxima a una distribución normal, lo cual es evidente en los histogramas y en los **QQ-plots**.
+El ajuste con la normal teórica mejora a medida que n crece. Para $n=500$ y $n=1000$, las distribuciones de las medias son prácticamente normales, lo que confirma empíricamente el Teorema de límite central.
+Las pruebas de normalidad respaldan estos hallazgos: para valores pequeños de n, la distribución no es normal, pero conforme n aumenta, la normalidad se confirma.
