@@ -1,0 +1,244 @@
+---
+title: "Tarea 2 - Estadística Inferencial"
+author: "Nilson Jacob González Campo, Lorena Portilla, Yan Carlos Cuarán"
+date: "`r format(Sys.Date(), '%d de %B de %Y')`"
+output:
+  html_document: default
+  pdf_document: default
+lang: es
+---
+
+# Punto 1
+
+**(Vale 2.0)** El tiempo de realización en minutos de una determinada tarea dentro de un proceso industrial es una variable aleatoria con función de densidad (Nota: Para cada literal se debe realizar el proceso paso a paso de manera teórica):
+
+$$ f(x) = \frac{x}{\theta^2} e^{-x/\theta}, \quad \theta > 0, \quad x > 0 $$
+
+**a.** Encuentre el estimador máximo verosímil de $\theta$.
+
+**b.** Encuentre el estimador de momentos de $\theta$.
+
+## Respuesta
+
+**a.**
+
+### paso 1
+
+En primer lugar, se trata de buscar si la función de densidad corresponde a algún modelo de distribución conocido. En este caso, la función dada es similar a la función de densidad de la distribución Gamma:
+
+$$
+f(x) = \frac{x^{k-1} e^{-x/\theta}}{\theta^k \Gamma(k)}, \quad x > 0, \quad \theta > 0, \quad k > 0
+$$
+
+Para que esta función sea similar a la función dada en este punto, se debe especificar un valor para $k=2$, lo que hace que la función se exprese de la siguiente forma:
+
+$$
+f(x) = \frac{x^{2-1} e^{-x/\theta}}{\theta^2 \Gamma(2)} = \frac{x e^{-x/\theta}}{\theta^2 \cdot 1} = \frac{x e^{-x/\theta}}{\theta^2} = \frac{x}{\theta^2} e^{-x/\theta}
+$$
+
+Según las propiedades de esta función de densidad de la distribución Gamma, se sabe que: $\Gamma(2) = (2-1)! = 1! = 1$
+
+La función de verosimilitud, expresada como $L(\theta \mid x_1, x_2, \dots, x_n)$, se define como el producto de las funciones de densidad evaluadas en cada observación:
+
+$$
+L(\theta \mid x_1, x_2, \dots, x_n) = \prod_{i=1}^{n} f(x_i) = \prod_{i=1}^{n} \frac{x_i}{\theta^2} e^{-x_i/\theta}.
+$$
+
+Esta expresión se puede reordenar como:
+
+$$
+L(\theta; x_1, x_2, \dots, x_n) = \frac{1}{\theta^{2n}} \left( \prod_{i=1}^{n} x_i \right) e^{-\frac{1}{\theta} \sum_{i=1}^{n} x_i}
+$$
+
+### Paso 2: calcular la log-verosimilitud
+
+se saca el logaritmo natural a $L(\theta; x_1, x_2, \dots, x_n)$ utilizando las siguientes propiedades del logaritmo natural:
+
+-   **Potencia:** $\ln\left(\theta^{-2n}\right) = -2n \ln(\theta)$.
+-   **Producto:** $\ln\left(\prod_{i=1}^{n} x_i\right) = \sum_{i=1}^{n} \ln(x_i)$.
+-   **Exponencial:** $\ln\left(\exp\left(-\frac{1}{\theta} \sum_{i=1}^{n} x_i\right)\right) = -\frac{1}{\theta} \sum_{i=1}^{n} x_i$.
+
+entonces se obtiene la expresion simplificada de la funcion de log-verosimilitud:
+
+$$
+\ell(\theta) = -2n \ln(\theta) + \sum_{i=1}^{n} \ln(x_i) - \frac{1}{\theta} \sum_{i=1}^{n} x_i.
+$$
+
+### Paso 3: se maxima la funcion de log verosimilitud respecto al parametro $\theta$.
+
+Para encontrar el estimador de máxima verosimilitud (EMV) de $\theta$, debemos maximizar la función de log-verosimilitud $\ell(\theta)$. Esto se hace derivando $\ell(\theta)$ con respecto a $\theta$ y luego igualando a cero.
+
+#### Paso 3.1: Derivar la función de log-verosimilitud
+
+Recordemos que la función de log-verosimilitud es:
+
+$$
+\ell(\theta) = -2n \ln(\theta) + \sum_{i=1}^{n} \ln(x_i) - \frac{1}{\theta} \sum_{i=1}^{n} x_i.
+$$
+
+Ahora, derivamos cada término de la ecuación con respecto a $\theta$:
+
+1.  La derivada de $-2n \ln(\theta)$ es:
+
+$$
+\frac{d}{d\theta} \left(-2n \ln(\theta)\right) = -\frac{2n}{\theta}.
+$$
+
+2.  La derivada de $\sum_{i=1}^{n} \ln(x_i)$ es **cero**, ya que no depende de $\theta$.
+
+3.  La derivada de $- \frac{1}{\theta} \sum_{i=1}^{n} x_i$ es:
+
+$$
+\frac{d}{d\theta} \left(- \frac{1}{\theta} \sum_{i=1}^{n} x_i\right) = \frac{1}{\theta^2} \sum_{i=1}^{n} x_i.
+$$
+
+Por lo tanto, la derivada de la función de log-verosimilitud es:
+
+$$
+\frac{d\ell(\theta)}{d\theta} = -\frac{2n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^{n} x_i.
+$$
+
+#### Paso 3.2: Igualar la derivada a cero
+
+Para encontrar el valor óptimo de $\theta$, igualamos la derivada a cero:
+
+$$
+-\frac{2n}{\theta} + \frac{1}{\theta^2} \sum_{i=1}^{n} x_i = 0.
+$$
+
+Multiplicamos ambos lados por $\theta^2$ para eliminar los denominadores:
+
+$$
+-2n \theta + \sum_{i=1}^{n} x_i = 0.
+$$
+
+#### Paso 3.3: Despejar $\theta$
+
+Despejamos $\theta$:
+
+$$
+2n \theta = \sum_{i=1}^{n} x_i.
+$$
+
+$$
+\theta = \frac{1}{2n} \sum_{i=1}^{n} x_i.
+$$
+
+Como la media muestral $\bar{x}$ está definida como:
+
+$$
+\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i,
+$$
+
+podemos escribir el estimador de máxima verosimilitud como:
+
+$$
+\hat{\theta} = \frac{\bar{x}}{2}.
+$$
+
+Esto quiere decir que para la distribucion gamma cuando $k=2$ entonces el estimador de maxima verosimilitud es $\bar{x}/2$.
+
+**b.**
+
+Para enconrar el estimador usando el metodo de momentos para $\theta$ primero se igualan los momentos muestrales (media muestral) a los momentos poblacionales (la esperanza poblacional) para luego despejar $\theta$.
+
+#### Paso 1: Calcular la esperanza poblacional $X$
+
+Teniendo en cuenta que la variable $X$ sigue una distribución Gamma con parámetros $k=2$ y $\theta$, se sabe que la media se calcula usando:
+
+$$
+E[X] = k\theta.
+$$
+
+Para este caso donde $k = 2$, entonces quedaria:
+
+$$
+E[X] = 2\theta.
+$$
+
+#### Paso 2: Igualar con la media muestral
+
+El primer momento muestral está dado por la media de la muestra:
+
+$$
+\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i.
+$$
+
+Aplicamos el método de momentos, igualando la esperanza poblacional con la media muestral:
+
+$$
+2\theta = \bar{X}.
+$$
+
+#### Paso 3: Se despeja $\theta$:
+
+$$
+\hat{\theta}_{MM} = \frac{\bar{X}}{2}
+$$
+
+Finalmente el estimador usando el metodo de momentos de $\theta$ es:
+
+$$
+\hat{\theta} = \frac{\bar{X}}{2}
+$$
+
+# Punto 2
+
+**(Vale 2.0)** Una población es definida por una variable aleatoria $X$ con distribución exponencial,
+
+$$
+f(x) = \frac{1}{5} e^{-x/5}, \quad x \geq 0.
+$$
+
+Genere $1000$ muestras aleatorias de tamaño $n$ de dicha población y calcule para cada una su media muestral.
+
+Construya un histograma con los $1000$ valores de la media, sobreponiendo al histograma una distribución normal con los parámetros: $\mu = 5$ y $\sigma = \frac{5}{\sqrt{n}}$. Haga esto para los tamaños de muestra $n = 5, 20, 50, 100$. (Nota: También puede utilizar una prueba de normalidad). Discuta los resultados.
+
+## Respuesta
+
+Se crearán muestras \(n = 5, 20, 50, 100, 500, 1000\). Para cada tamaño se calcularán las medias muestrales y se construirá un histograma sobre el que se superpondrá la densidad de una distribución normal con parámetros
+
+\[
+\mu = 5 \quad \text{y} \quad \sigma = \frac{5}{\sqrt{n}}.
+\]
+
+Esto nos permitirá visualizar el efecto del Teorema del Límite Central, que establece que la distribución de la media muestral se aproxima a la normal a medida que aumenta el tamaño de la muestra, independientemente de la forma de la distribución original.
+
+## Código de Simulación y Gráficos
+
+```{r simulacion, echo=TRUE, fig.width=8, fig.height=6}
+set.seed(321)
+
+# Parámetros de la distribución exponencial
+lambda <- 1/5   # Tasa de la exponencial
+B <- 10000       # Número de muestras a generar
+sample_sizes <- c(5, 20, 50, 100, 500, 1000)
+
+# configurar como se posicionan las graficas, de a dos columnas
+par(mfrow = c(2,2))
+
+# Ciclo para cada tamaño de muestra
+for (n in sample_sizes) {
+  
+  # Generar B muestras y calcular la media de cada muestra
+  sample_means <- replicate(B, mean(rexp(n, rate = lambda)))
+  
+  # Construir el histograma de las medias muestrales
+  hist(sample_means, probability = TRUE,
+       main = paste("Histograma de la media (n =", n, ")"),
+       xlab = "Media muestral", col = "lightblue", border = "white")
+  
+  # Superponer la curva de la distribución normal teórica
+  curve(dnorm(x, mean = 5, sd = 5/sqrt(n)), 
+        add = TRUE, col = "red", lwd = 2)
+  
+  # Agregar leyenda
+  legend("topright", legend = "Normal Teórica", col = "red", lwd = 2, bty = "n")
+
+  
+  # Gráfico QQ-plot para evaluar la normalidad de las medias
+  qqnorm(sample_means, main = paste("QQ plot (n =", n, ")"), col = "blue")
+  qqline(sample_means, col = "red", lwd = 2)
+}
+```
+
