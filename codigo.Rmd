@@ -202,7 +202,9 @@ Se crearán muestras \(n = 5, 20, 50, 100, 500, 1000\). Para cada tamaño se cal
 \mu = 5 \quad \text{y} \quad \sigma = \frac{5}{\sqrt{n}}.
 \]
 
-Esto nos permitirá visualizar el efecto del Teorema del Límite Central, que establece que la distribución de la media muestral se aproxima a la normal a medida que aumenta el tamaño de la muestra, independientemente de la forma de la distribución original.
+Esto nos permitirá visualizar el efecto del Teorema del Límite Central, el cual se refiere a que la distribución de la media muestral se aproxima a la normal a medida que aumenta el tamaño de la muestra, independientemente de la distribución original
+
+Adicionalmente, se aplican pruebas de normalidad al lado de cada histograma para mostrar como se va a proximando cada vez mas a la linea de referencia que indica que es una distribución normal.
 
 ## Código de Simulación y Gráficos
 
@@ -218,7 +220,6 @@ sample_sizes <- c(5, 20, 50, 100, 500, 1000)
 # Configurar cómo se posicionan las gráficas, de a dos columnas
 par(mfrow = c(2,2))
 
-# Ciclo para cada tamaño de muestra
 for (n in sample_sizes) {
   
   # Generar B muestras y calcular la media de cada muestra
@@ -227,9 +228,10 @@ for (n in sample_sizes) {
   # Construir el histograma de las medias muestrales
   hist(sample_means, probability = TRUE,
        main = paste("Histograma de la media (n =", n, ")"),
-       xlab = "Media muestral", col = "lightblue", border = "white")
+       xlab = "Media muestral", col = "lightblue", border = "white", ylab="Densidad")
   
   # Superponer la curva de la distribución normal teórica
+  # se usa la desviacion estandar teórica y la media teórica 
   curve(dnorm(x, mean = 5, sd = 5/sqrt(n)), 
         add = TRUE, col = "red", lwd = 2)
   
@@ -237,7 +239,7 @@ for (n in sample_sizes) {
   legend("topright", legend = "Normal Teórica", col = "red", lwd = 2, bty = "n")
 
   # Gráfico QQ-plot para evaluar la normalidad de las medias
-  qqnorm(sample_means, main = paste("QQ plot (n =", n, ")"), col = "blue")
+  qqnorm(sample_means, main = paste("QQ plot (n =", n, ")"), col = "blue", xlab="cantidades teóricas", ylab="cantidades de la muestra")
   qqline(sample_means, col = "red", lwd = 2)
 }
 ```
